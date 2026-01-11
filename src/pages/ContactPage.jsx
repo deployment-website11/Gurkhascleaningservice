@@ -6,7 +6,7 @@ import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { Label } from '../components/ui/label';
 import { companyInfo } from '../data/mock';
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +16,6 @@ const ContactPage = () => {
     subject: '',
     message: ''
   });
-  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,17 +23,26 @@ const ContactPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Contact form:', formData);
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    
+    // Format message for WhatsApp
+    const whatsappMessage = `*New Contact Message*%0A%0A` +
+      `*Name:* ${formData.name}%0A` +
+      `*Email:* ${formData.email}%0A` +
+      `*Phone:* ${formData.phone}%0A` +
+      `*Subject:* ${formData.subject}%0A%0A` +
+      `*Message:*%0A${formData.message}%0A%0A` +
+      `_Sent from gurkhascleaningservice.com.au_`;
+    
+    // Open WhatsApp with pre-filled message
+    const whatsappURL = `https://wa.me/61414419421?text=${whatsappMessage}`;
+    window.open(whatsappURL, '_blank');
   };
 
   const contactInfo = [
     { icon: Phone, label: "Phone", value: companyInfo.phone, href: `tel:${companyInfo.phoneRaw}` },
     { icon: Mail, label: "Email", value: companyInfo.email, href: `mailto:${companyInfo.email}` },
     { icon: MapPin, label: "Location", value: `${companyInfo.address.street}, ${companyInfo.address.suburb}`, href: null },
-    { icon: Clock, label: "Hours", value: "Mon-Fri: 8am-5pm", href: null }
+    { icon: Clock, label: "Hours", value: "Available 24/7", href: null }
   ];
 
   return (
@@ -82,12 +90,19 @@ const ContactPage = () => {
                   </div>
                 ))}
 
-                {/* Map placeholder */}
-                <div className="mt-8 bg-gray-100 rounded-2xl h-48 flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPin className="text-[#c41e3a] mx-auto mb-2" size={32} />
-                    <p className="text-gray-600">Adelaide, South Australia</p>
-                  </div>
+                {/* WhatsApp Direct Button */}
+                <div className="mt-8 p-6 bg-[#25D366]/10 rounded-2xl">
+                  <h3 className="font-bold text-[#1e3a5f] mb-2">Quick Contact</h3>
+                  <p className="text-gray-600 text-sm mb-4">Message us directly on WhatsApp for fastest response!</p>
+                  <a
+                    href="https://wa.me/61414419421?text=Hi,%20I'm%20interested%20in%20your%20cleaning%20services."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#128C7E] transition-colors"
+                  >
+                    <MessageCircle size={20} />
+                    WhatsApp Us
+                  </a>
                 </div>
               </div>
 
@@ -96,84 +111,74 @@ const ContactPage = () => {
                 <div className="bg-gray-50 rounded-2xl p-6 sm:p-10">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-6">Send a Message</h2>
                   
-                  {submitted ? (
-                    <div className="text-center py-12">
-                      <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <CheckCircle className="text-green-500" size={40} />
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div>
+                        <Label htmlFor="name" className="text-gray-700 font-medium">Name *</Label>
+                        <Input
+                          id="name"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          required
+                          className="mt-2 h-12 rounded-xl"
+                        />
                       </div>
-                      <h3 className="text-2xl font-bold text-[#1e3a5f] mb-2">Message Sent!</h3>
-                      <p className="text-gray-600">Thanks for reaching out. We'll be in touch soon.</p>
+                      <div>
+                        <Label htmlFor="phone" className="text-gray-700 font-medium">Phone</Label>
+                        <Input
+                          id="phone"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          className="mt-2 h-12 rounded-xl"
+                        />
+                      </div>
                     </div>
-                  ) : (
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div>
-                          <Label htmlFor="name" className="text-gray-700 font-medium">Name *</Label>
-                          <Input
-                            id="name"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                            className="mt-2 h-12 rounded-xl"
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="phone" className="text-gray-700 font-medium">Phone</Label>
-                          <Input
-                            id="phone"
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            className="mt-2 h-12 rounded-xl"
-                          />
-                        </div>
-                      </div>
 
-                      <div>
-                        <Label htmlFor="email" className="text-gray-700 font-medium">Email *</Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          required
-                          className="mt-2 h-12 rounded-xl"
-                        />
-                      </div>
+                    <div>
+                      <Label htmlFor="email" className="text-gray-700 font-medium">Email *</Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="mt-2 h-12 rounded-xl"
+                      />
+                    </div>
 
-                      <div>
-                        <Label htmlFor="subject" className="text-gray-700 font-medium">Subject *</Label>
-                        <Input
-                          id="subject"
-                          name="subject"
-                          value={formData.subject}
-                          onChange={handleChange}
-                          required
-                          className="mt-2 h-12 rounded-xl"
-                        />
-                      </div>
+                    <div>
+                      <Label htmlFor="subject" className="text-gray-700 font-medium">Subject *</Label>
+                      <Input
+                        id="subject"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
+                        required
+                        className="mt-2 h-12 rounded-xl"
+                      />
+                    </div>
 
-                      <div>
-                        <Label htmlFor="message" className="text-gray-700 font-medium">Message *</Label>
-                        <Textarea
-                          id="message"
-                          name="message"
-                          value={formData.message}
-                          onChange={handleChange}
-                          required
-                          rows={5}
-                          className="mt-2 rounded-xl"
-                        />
-                      </div>
+                    <div>
+                      <Label htmlFor="message" className="text-gray-700 font-medium">Message *</Label>
+                      <Textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
+                        rows={5}
+                        className="mt-2 rounded-xl"
+                      />
+                    </div>
 
-                      <Button type="submit" className="w-full h-14 bg-[#c41e3a] hover:bg-[#a01830] text-white text-lg font-semibold rounded-xl">
-                        <Send size={20} className="mr-2" />
-                        Send Message
-                      </Button>
-                    </form>
-                  )}
+                    <Button type="submit" className="w-full h-14 bg-[#25D366] hover:bg-[#128C7E] text-white text-lg font-semibold rounded-xl">
+                      <MessageCircle size={20} className="mr-2" />
+                      Send via WhatsApp
+                    </Button>
+                  </form>
                 </div>
               </div>
             </div>

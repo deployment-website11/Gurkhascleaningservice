@@ -7,7 +7,7 @@ import { Textarea } from '../components/ui/textarea';
 import { Label } from '../components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { services, companyInfo } from '../data/mock';
-import { Phone, CheckCircle, Send } from 'lucide-react';
+import { Phone, CheckCircle, Send, MessageCircle } from 'lucide-react';
 
 const QuotesPage = () => {
   const [formData, setFormData] = useState({
@@ -17,7 +17,6 @@ const QuotesPage = () => {
     service: '',
     message: ''
   });
-  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,10 +28,19 @@ const QuotesPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Quote request submitted:', formData);
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
-    setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+    
+    // Format message for WhatsApp
+    const whatsappMessage = `*New Quote Request*%0A%0A` +
+      `*Name:* ${formData.name}%0A` +
+      `*Email:* ${formData.email}%0A` +
+      `*Phone:* ${formData.phone}%0A` +
+      `*Service:* ${formData.service}%0A` +
+      `*Message:* ${formData.message}%0A%0A` +
+      `_Sent from gurkhascleaningservice.com.au_`;
+    
+    // Open WhatsApp with pre-filled message
+    const whatsappURL = `https://wa.me/61414419421?text=${whatsappMessage}`;
+    window.open(whatsappURL, '_blank');
   };
 
   return (
@@ -61,92 +69,82 @@ const QuotesPage = () => {
               {/* Form */}
               <div className="lg:col-span-3">
                 <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-10">
-                  {submitted ? (
-                    <div className="text-center py-12">
-                      <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <CheckCircle className="text-green-500" size={40} />
-                      </div>
-                      <h3 className="text-2xl font-bold text-[#1e3a5f] mb-2">Thank You!</h3>
-                      <p className="text-gray-600">We've received your request and will contact you soon.</p>
-                    </div>
-                  ) : (
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div>
-                          <Label htmlFor="name" className="text-gray-700 font-medium">Full Name *</Label>
-                          <Input
-                            id="name"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                            className="mt-2 h-12 rounded-xl"
-                            placeholder="John Smith"
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="phone" className="text-gray-700 font-medium">Phone *</Label>
-                          <Input
-                            id="phone"
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            required
-                            className="mt-2 h-12 rounded-xl"
-                            placeholder="0400 000 000"
-                          />
-                        </div>
-                      </div>
-
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
-                        <Label htmlFor="email" className="text-gray-700 font-medium">Email *</Label>
+                        <Label htmlFor="name" className="text-gray-700 font-medium">Full Name *</Label>
                         <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          value={formData.email}
+                          id="name"
+                          name="name"
+                          value={formData.name}
                           onChange={handleChange}
                           required
                           className="mt-2 h-12 rounded-xl"
-                          placeholder="john@example.com"
+                          placeholder="John Smith"
                         />
                       </div>
-
                       <div>
-                        <Label className="text-gray-700 font-medium">Service Required *</Label>
-                        <Select onValueChange={handleServiceChange} value={formData.service}>
-                          <SelectTrigger className="mt-2 h-12 rounded-xl">
-                            <SelectValue placeholder="Select a service" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {services.map((service) => (
-                              <SelectItem key={service.id} value={service.name}>
-                                {service.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <Label htmlFor="message" className="text-gray-700 font-medium">Additional Details</Label>
-                        <Textarea
-                          id="message"
-                          name="message"
-                          value={formData.message}
+                        <Label htmlFor="phone" className="text-gray-700 font-medium">Phone *</Label>
+                        <Input
+                          id="phone"
+                          name="phone"
+                          value={formData.phone}
                           onChange={handleChange}
-                          rows={4}
-                          className="mt-2 rounded-xl"
-                          placeholder="Tell us about your cleaning requirements..."
+                          required
+                          className="mt-2 h-12 rounded-xl"
+                          placeholder="0400 000 000"
                         />
                       </div>
+                    </div>
 
-                      <Button type="submit" className="w-full h-14 bg-[#c41e3a] hover:bg-[#a01830] text-white text-lg font-semibold rounded-xl">
-                        <Send size={20} className="mr-2" />
-                        Submit Request
-                      </Button>
-                    </form>
-                  )}
+                    <div>
+                      <Label htmlFor="email" className="text-gray-700 font-medium">Email *</Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="mt-2 h-12 rounded-xl"
+                        placeholder="john@example.com"
+                      />
+                    </div>
+
+                    <div>
+                      <Label className="text-gray-700 font-medium">Service Required *</Label>
+                      <Select onValueChange={handleServiceChange} value={formData.service} required>
+                        <SelectTrigger className="mt-2 h-12 rounded-xl">
+                          <SelectValue placeholder="Select a service" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {services.map((service) => (
+                            <SelectItem key={service.id} value={service.name}>
+                              {service.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="message" className="text-gray-700 font-medium">Additional Details</Label>
+                      <Textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        rows={4}
+                        className="mt-2 rounded-xl"
+                        placeholder="Tell us about your cleaning requirements..."
+                      />
+                    </div>
+
+                    <Button type="submit" className="w-full h-14 bg-[#25D366] hover:bg-[#128C7E] text-white text-lg font-semibold rounded-xl">
+                      <MessageCircle size={20} className="mr-2" />
+                      Send via WhatsApp
+                    </Button>
+                  </form>
                 </div>
               </div>
 
@@ -169,7 +167,7 @@ const QuotesPage = () => {
                   <ul className="space-y-4">
                     <li className="flex items-start gap-3">
                       <CheckCircle className="text-[#c41e3a] flex-shrink-0 mt-0.5" size={20} />
-                      <span className="text-gray-600">Response within 24 hours</span>
+                      <span className="text-gray-600">Quick response via WhatsApp</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <CheckCircle className="text-[#c41e3a] flex-shrink-0 mt-0.5" size={20} />

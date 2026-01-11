@@ -5,7 +5,7 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { Label } from '../components/ui/label';
-import { Briefcase, Clock, MapPin, DollarSign, CheckCircle, Send } from 'lucide-react';
+import { Briefcase, Clock, MapPin, DollarSign, MessageCircle } from 'lucide-react';
 
 const EmploymentPage = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +16,6 @@ const EmploymentPage = () => {
     availability: '',
     message: ''
   });
-  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,10 +23,20 @@ const EmploymentPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Employment application:', formData);
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
-    setFormData({ name: '', email: '', phone: '', experience: '', availability: '', message: '' });
+    
+    // Format message for WhatsApp
+    const whatsappMessage = `*Job Application*%0A%0A` +
+      `*Name:* ${formData.name}%0A` +
+      `*Email:* ${formData.email}%0A` +
+      `*Phone:* ${formData.phone}%0A` +
+      `*Experience:* ${formData.experience}%0A` +
+      `*Availability:* ${formData.availability}%0A%0A` +
+      `*Additional Info:*%0A${formData.message}%0A%0A` +
+      `_Sent from gurkhascleaningservice.com.au_`;
+    
+    // Open WhatsApp with pre-filled message
+    const whatsappURL = `https://wa.me/61414419421?text=${whatsappMessage}`;
+    window.open(whatsappURL, '_blank');
   };
 
   const benefits = [
@@ -79,96 +88,86 @@ const EmploymentPage = () => {
             <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-10">
               <h2 className="text-2xl font-bold text-[#1e3a5f] mb-6 text-center">Apply Now</h2>
               
-              {submitted ? (
-                <div className="text-center py-12">
-                  <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle className="text-green-500" size={40} />
-                  </div>
-                  <h3 className="text-2xl font-bold text-[#1e3a5f] mb-2">Application Received!</h3>
-                  <p className="text-gray-600">We'll review your application and be in touch soon.</p>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <Label htmlFor="name" className="text-gray-700 font-medium">Full Name *</Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="mt-2 h-12 rounded-xl"
+                  />
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <Label htmlFor="name" className="text-gray-700 font-medium">Full Name *</Label>
+                    <Label htmlFor="email" className="text-gray-700 font-medium">Email *</Label>
                     <Input
-                      id="name"
-                      name="name"
-                      value={formData.name}
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
                       onChange={handleChange}
                       required
                       className="mt-2 h-12 rounded-xl"
                     />
                   </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                      <Label htmlFor="email" className="text-gray-700 font-medium">Email *</Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="mt-2 h-12 rounded-xl"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="phone" className="text-gray-700 font-medium">Phone *</Label>
-                      <Input
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        required
-                        className="mt-2 h-12 rounded-xl"
-                      />
-                    </div>
-                  </div>
-
                   <div>
-                    <Label htmlFor="experience" className="text-gray-700 font-medium">Previous Experience</Label>
+                    <Label htmlFor="phone" className="text-gray-700 font-medium">Phone *</Label>
                     <Input
-                      id="experience"
-                      name="experience"
-                      value={formData.experience}
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
                       onChange={handleChange}
+                      required
                       className="mt-2 h-12 rounded-xl"
-                      placeholder="e.g., 2 years commercial cleaning"
                     />
                   </div>
+                </div>
 
-                  <div>
-                    <Label htmlFor="availability" className="text-gray-700 font-medium">Availability</Label>
-                    <Input
-                      id="availability"
-                      name="availability"
-                      value={formData.availability}
-                      onChange={handleChange}
-                      className="mt-2 h-12 rounded-xl"
-                      placeholder="e.g., Weekdays, Evenings, Weekends"
-                    />
-                  </div>
+                <div>
+                  <Label htmlFor="experience" className="text-gray-700 font-medium">Previous Experience</Label>
+                  <Input
+                    id="experience"
+                    name="experience"
+                    value={formData.experience}
+                    onChange={handleChange}
+                    className="mt-2 h-12 rounded-xl"
+                    placeholder="e.g., 2 years commercial cleaning"
+                  />
+                </div>
 
-                  <div>
-                    <Label htmlFor="message" className="text-gray-700 font-medium">Why do you want to join us?</Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={4}
-                      className="mt-2 rounded-xl"
-                    />
-                  </div>
+                <div>
+                  <Label htmlFor="availability" className="text-gray-700 font-medium">Availability</Label>
+                  <Input
+                    id="availability"
+                    name="availability"
+                    value={formData.availability}
+                    onChange={handleChange}
+                    className="mt-2 h-12 rounded-xl"
+                    placeholder="e.g., Weekdays, Evenings, Weekends"
+                  />
+                </div>
 
-                  <Button type="submit" className="w-full h-14 bg-[#c41e3a] hover:bg-[#a01830] text-white text-lg font-semibold rounded-xl">
-                    <Send size={20} className="mr-2" />
-                    Submit Application
-                  </Button>
-                </form>
-              )}
+                <div>
+                  <Label htmlFor="message" className="text-gray-700 font-medium">Why do you want to join us?</Label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={4}
+                    className="mt-2 rounded-xl"
+                  />
+                </div>
+
+                <Button type="submit" className="w-full h-14 bg-[#25D366] hover:bg-[#128C7E] text-white text-lg font-semibold rounded-xl">
+                  <MessageCircle size={20} className="mr-2" />
+                  Apply via WhatsApp
+                </Button>
+              </form>
             </div>
           </div>
         </section>
