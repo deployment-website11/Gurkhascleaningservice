@@ -255,7 +255,7 @@ function setupDevServer(config) {
           // Traverse and update AST using line numbers
           traverse(ast, {
             JSXOpeningElement: (path) => {
-              const lineNumber = path.node.loc?.start.line;
+              const lineNumber = path.node.loc && path.node.loc.start.line;
               if (!lineNumber) return;
 
               const changesAtLine = changesByLine[lineNumber];

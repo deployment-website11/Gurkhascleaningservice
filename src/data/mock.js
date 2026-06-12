@@ -2,8 +2,8 @@
 
 export const companyInfo = {
   name: "Gurkhas Cleaning Services",
-  phone: "0414 419 421",
-  phoneRaw: "0414419421",
+  phone: "0452 029 732",
+  phoneRaw: "0452029732",
   email: "Gurkhascleaning9672@gmail.com",
   address: {
     street: "33b O'Grady Dr",
@@ -12,9 +12,9 @@ export const companyInfo = {
   },
   tagline: "Cleaning with Honor, Service with Pride",
   subtitle: "Professional cleaning services delivered with dedication and excellence",
-  copyright: "© 2025 Gurkhas Cleaning Services. All rights reserved.",
-  logo: "https://customer-assets.emergentagent.com/job_f606d67a-d187-481c-b45f-170baeb7bb93/artifacts/kscwbczu_1000098224.jpg",
-  heroLogo: "https://customer-assets.emergentagent.com/job_f606d67a-d187-481c-b45f-170baeb7bb93/artifacts/l7jzybx1_1000098225.jpg"
+  copyright: "© 2026 Gurkhas Cleaning Services. All rights reserved.",
+  logo: "https://i.ibb.co/GQLynRJK/logo-top-final.jpg",
+  heroLogo: "https://i.ibb.co/9Hkcg2pz/logo.jpg"
 };
 
 export const navigation = [

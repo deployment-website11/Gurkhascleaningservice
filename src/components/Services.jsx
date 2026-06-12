@@ -3,62 +3,72 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Building2, Key, Briefcase, Sparkles, Layers, Home } from 'lucide-react';
 import { services } from '../data/mock';
 
-const iconMap = {
-  Building2, Key, Briefcase, Sparkles, Layers, Home
-};
+const iconMap = { Building2, Key, Briefcase, Sparkles, Layers, Home };
 
 const Services = () => {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#f9fafb]">
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
+
+        {/* Header */}
         <div className="text-center mb-16">
-          <span className="inline-block bg-[#1e3a5f]/10 text-[#1e3a5f] px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
-            Our Services
+          <span className="inline-block bg-[#e6f4f2] text-[#0d6e62] px-4 py-1.5 rounded-full text-sm font-bold mb-4 tracking-wide uppercase">
+            What We Offer
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1e3a5f] mb-6">
-            Professional Cleaning Solutions
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
+            Cleaning Solutions for Every Space
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            From offices to homes, we provide comprehensive cleaning services tailored to your needs.
+          <p className="text-gray-500 text-lg max-w-2xl mx-auto">
+            From homes to offices and beyond — we bring the same standard of care to every job.
           </p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
           {services.map((service) => {
             const Icon = iconMap[service.icon] || Building2;
             return (
               <Link
                 key={service.id}
                 to="/services"
-                className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+                className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100"
               >
+                {/* Image */}
                 <div className="relative h-48 overflow-hidden">
                   <img
                     src={service.image}
                     alt={service.name}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1e3a5f]/80 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-[#c41e3a] rounded-lg flex items-center justify-center">
-                        <Icon className="text-white" size={20} />
-                      </div>
-                      <h3 className="text-white font-bold text-lg">{service.name}</h3>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#063d38]/80 to-transparent" />
+                  <div className="absolute bottom-4 left-4">
+                    <div className="w-10 h-10 bg-[#f59e0b] rounded-xl flex items-center justify-center shadow-md">
+                      <Icon className="text-gray-900" size={20} />
                     </div>
                   </div>
                 </div>
+
+                {/* Body */}
                 <div className="p-6">
-                  <p className="text-gray-600 mb-4">{service.description}</p>
-                  <span className="inline-flex items-center text-[#c41e3a] font-semibold group-hover:gap-3 transition-all">
-                    Learn More <ArrowRight size={18} className="ml-1" />
+                  <h3 className="font-display text-lg font-bold text-gray-900 mb-2">{service.name}</h3>
+                  <p className="text-gray-500 text-sm mb-4 leading-relaxed">{service.description}</p>
+                  <span className="inline-flex items-center gap-1.5 text-[#0d6e62] font-semibold text-sm group-hover:gap-3 transition-all">
+                    Learn More <ArrowRight size={16} />
                   </span>
                 </div>
               </Link>
             );
           })}
+        </div>
+
+        {/* View All */}
+        <div className="text-center mt-12">
+          <Link
+            to="/services"
+            className="inline-flex items-center gap-2 border-2 border-[#0d6e62] text-[#0d6e62] px-8 py-3.5 rounded-full font-bold hover:bg-[#0d6e62] hover:text-white transition-all"
+          >
+            View All Services <ArrowRight size={18} />
+          </Link>
         </div>
       </div>
     </section>
@@ -66,3 +76,4 @@ const Services = () => {
 };
 
 export default Services;
+

@@ -9,173 +9,114 @@ import { companyInfo } from '../data/mock';
 import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
 
 const ContactPage = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // Format message for WhatsApp
-    const whatsappMessage = `*New Contact Message*%0A%0A` +
-      `*Name:* ${formData.name}%0A` +
-      `*Email:* ${formData.email}%0A` +
-      `*Phone:* ${formData.phone}%0A` +
-      `*Subject:* ${formData.subject}%0A%0A` +
-      `*Message:*%0A${formData.message}%0A%0A` +
-      `_Sent from gurkhascleaningservice.com.au_`;
-    
-    // Open WhatsApp with pre-filled message
-    const whatsappURL = `https://wa.me/61414419421?text=${whatsappMessage}`;
-    window.open(whatsappURL, '_blank');
+    const msg = `*New Contact Message*%0A%0A*Name:* ${formData.name}%0A*Email:* ${formData.email}%0A*Phone:* ${formData.phone}%0A*Subject:* ${formData.subject}%0A%0A*Message:*%0A${formData.message}%0A%0A_Sent from gurkhascleaningservice.com.au_`;
+    window.open(`https://wa.me/61414419421?text=${msg}`, '_blank');
   };
 
   const contactInfo = [
-    { icon: Phone, label: "Phone", value: companyInfo.phone, href: `tel:${companyInfo.phoneRaw}` },
-    { icon: Mail, label: "Email", value: companyInfo.email, href: `mailto:${companyInfo.email}` },
-    { icon: MapPin, label: "Location", value: `${companyInfo.address.street}, ${companyInfo.address.suburb}`, href: null },
-    { icon: Clock, label: "Hours", value: "Available 24/7", href: null }
+    { icon: Phone,  label: 'Phone',    value: companyInfo.phone,  href: `tel:${companyInfo.phoneRaw}` },
+    { icon: Mail,   label: 'Email',    value: companyInfo.email,  href: `mailto:${companyInfo.email}` },
+    { icon: MapPin, label: 'Location', value: `${companyInfo.address.street}, ${companyInfo.address.suburb}`, href: null },
+    { icon: Clock,  label: 'Hours',    value: 'Available 24/7',   href: null },
   ];
 
   return (
     <div className="min-h-screen">
       <Header />
       <main>
-        {/* Hero */}
-        <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#1e3a5f] to-[#2a4a6f]">
+
+        {/* Page Hero */}
+        <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#063d38] via-[#0d6e62] to-[#0a5750]">
           <div className="max-w-7xl mx-auto text-center">
-            <span className="inline-block bg-white/10 text-white px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
+            <span className="inline-block bg-[#f59e0b]/20 text-[#f59e0b] px-4 py-1.5 rounded-full text-sm font-bold mb-4 tracking-wide uppercase">
               Get In Touch
             </span>
-            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+            <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-white mb-5">
               Contact Us
             </h1>
-            <p className="text-white/80 text-lg max-w-2xl mx-auto">
-              Have questions? We'd love to hear from you. Reach out and we'll respond as soon as we can.
+            <p className="text-white/70 text-lg max-w-2xl mx-auto">
+              Have questions? We'd love to hear from you — reach out and we'll get back to you promptly.
             </p>
           </div>
         </section>
 
         {/* Contact Section */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#f9fafb]">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-              {/* Contact Info */}
-              <div className="lg:col-span-2 space-y-6">
-                <h2 className="text-2xl font-bold text-[#1e3a5f] mb-8">Contact Information</h2>
-                
-                {contactInfo.map((item, index) => (
-                  <div key={index} className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-[#c41e3a]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <item.icon className="text-[#c41e3a]" size={24} />
+
+              {/* Info */}
+              <div className="lg:col-span-2 space-y-5">
+                <h2 className="font-display text-2xl font-bold text-gray-900 mb-6">Contact Information</h2>
+                {contactInfo.map((item, i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-[#e6f4f2] rounded-xl flex items-center justify-center flex-shrink-0">
+                      <item.icon className="text-[#0d6e62]" size={22} />
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500 mb-1">{item.label}</p>
+                      <p className="text-xs text-gray-400 mb-1 font-medium uppercase tracking-wide">{item.label}</p>
                       {item.href ? (
-                        <a href={item.href} className="text-[#1e3a5f] font-semibold hover:text-[#c41e3a] transition-colors">
+                        <a href={item.href} className="text-gray-900 font-semibold hover:text-[#0d6e62] transition-colors text-sm">
                           {item.value}
                         </a>
                       ) : (
-                        <p className="text-[#1e3a5f] font-semibold">{item.value}</p>
+                        <p className="text-gray-900 font-semibold text-sm">{item.value}</p>
                       )}
                     </div>
                   </div>
                 ))}
 
-                {/* WhatsApp Direct Button */}
-                <div className="mt-8 p-6 bg-[#25D366]/10 rounded-2xl">
-                  <h3 className="font-bold text-[#1e3a5f] mb-2">Quick Contact</h3>
-                  <p className="text-gray-600 text-sm mb-4">Message us directly on WhatsApp for fastest response!</p>
+                {/* WhatsApp card */}
+                <div className="mt-6 p-6 bg-[#25D366]/10 border border-[#25D366]/20 rounded-2xl">
+                  <h3 className="font-display font-bold text-gray-900 mb-1">Quick Response</h3>
+                  <p className="text-gray-500 text-sm mb-4">Message us on WhatsApp for the fastest reply!</p>
                   <a
                     href="https://wa.me/61414419421?text=Hi,%20I'm%20interested%20in%20your%20cleaning%20services."
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#128C7E] transition-colors"
+                    className="inline-flex items-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#128C7E] transition-colors text-sm"
                   >
-                    <MessageCircle size={20} />
+                    <MessageCircle size={18} />
                     WhatsApp Us
                   </a>
                 </div>
               </div>
 
-              {/* Contact Form */}
+              {/* Form */}
               <div className="lg:col-span-3">
-                <div className="bg-gray-50 rounded-2xl p-6 sm:p-10">
-                  <h2 className="text-2xl font-bold text-[#1e3a5f] mb-6">Send a Message</h2>
-                  
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-10">
+                  <h2 className="font-display text-2xl font-bold text-gray-900 mb-6">Send a Message</h2>
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
-                        <Label htmlFor="name" className="text-gray-700 font-medium">Name *</Label>
-                        <Input
-                          id="name"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          required
-                          className="mt-2 h-12 rounded-xl"
-                        />
+                        <Label htmlFor="name" className="text-gray-700 font-medium text-sm">Name *</Label>
+                        <Input id="name" name="name" value={formData.name} onChange={handleChange} required className="mt-2 h-12 rounded-xl border-gray-200 focus:border-[#0d6e62] focus:ring-[#0d6e62]" />
                       </div>
                       <div>
-                        <Label htmlFor="phone" className="text-gray-700 font-medium">Phone</Label>
-                        <Input
-                          id="phone"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          className="mt-2 h-12 rounded-xl"
-                        />
+                        <Label htmlFor="phone" className="text-gray-700 font-medium text-sm">Phone</Label>
+                        <Input id="phone" name="phone" value={formData.phone} onChange={handleChange} className="mt-2 h-12 rounded-xl border-gray-200" />
                       </div>
                     </div>
-
                     <div>
-                      <Label htmlFor="email" className="text-gray-700 font-medium">Email *</Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="mt-2 h-12 rounded-xl"
-                      />
+                      <Label htmlFor="email" className="text-gray-700 font-medium text-sm">Email *</Label>
+                      <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required className="mt-2 h-12 rounded-xl border-gray-200" />
                     </div>
-
                     <div>
-                      <Label htmlFor="subject" className="text-gray-700 font-medium">Subject *</Label>
-                      <Input
-                        id="subject"
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleChange}
-                        required
-                        className="mt-2 h-12 rounded-xl"
-                      />
+                      <Label htmlFor="subject" className="text-gray-700 font-medium text-sm">Subject *</Label>
+                      <Input id="subject" name="subject" value={formData.subject} onChange={handleChange} required className="mt-2 h-12 rounded-xl border-gray-200" />
                     </div>
-
                     <div>
-                      <Label htmlFor="message" className="text-gray-700 font-medium">Message *</Label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
-                        rows={5}
-                        className="mt-2 rounded-xl"
-                      />
+                      <Label htmlFor="message" className="text-gray-700 font-medium text-sm">Message *</Label>
+                      <Textarea id="message" name="message" value={formData.message} onChange={handleChange} required rows={5} className="mt-2 rounded-xl border-gray-200" />
                     </div>
-
-                    <Button type="submit" className="w-full h-14 bg-[#25D366] hover:bg-[#128C7E] text-white text-lg font-semibold rounded-xl">
-                      <MessageCircle size={20} className="mr-2" />
+                    <Button type="submit" className="w-full h-13 bg-[#25D366] hover:bg-[#128C7E] text-white text-base font-bold rounded-xl py-4">
+                      <MessageCircle size={19} className="mr-2" />
                       Send via WhatsApp
                     </Button>
                   </form>
@@ -191,3 +132,4 @@ const ContactPage = () => {
 };
 
 export default ContactPage;
+
