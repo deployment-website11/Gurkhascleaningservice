@@ -8,22 +8,26 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        /* Brand */
-        teal: {
-          DEFAULT: '#0d6e62',
-          dark:    '#094f47',
-          light:   '#e6f4f2',
-          50:      '#f0faf9',
-          100:     '#ccede9',
-          600:     '#0d6e62',
-          700:     '#094f47',
+        // ── Brand Palette: Deep Navy + Electric Blue ──
+        navy: {
+          DEFAULT: '#1a2744',
+          dark:    '#0f1a2e',
+          light:   '#253660',
+          50:      '#f0f3fa',
+          100:     '#d6ddf0',
         },
-        amber: {
+        blue: {
+          brand:   '#2563eb',
+          dark:    '#1d4ed8',
+          light:   '#eff6ff',
+          glow:    '#3b82f6',
+        },
+        gold: {
           DEFAULT: '#f59e0b',
           dark:    '#d97706',
           light:   '#fef3c7',
         },
-        /* shadcn/ui tokens */
+        // shadcn/ui tokens
         background:  'hsl(var(--background))',
         foreground:  'hsl(var(--foreground))',
         card: {
