@@ -4,71 +4,79 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
-body { margin: 0; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+h1,h2,h3,h4,h5,h6 { font-family:'Plus Jakarta Sans',sans-serif; }
 
 @layer base {
   :root {
-    --brand-navy:       #1a2744;
-    --brand-navy-dark:  #0f1a2e;
-    --brand-blue:       #2563eb;
-    --brand-blue-dark:  #1d4ed8;
-    --brand-blue-light: #eff6ff;
-    --brand-gold:       #f59e0b;
-    --brand-gold-dark:  #d97706;
     --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
+    --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 221 83% 53%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 142 71% 45%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 220 9% 46%;
-    --accent: 43 96% 56%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 84% 60%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 84 81% 44%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 221 83% 53%;
-    --radius: 0.625rem;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 142 71% 45%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
   }
   * { @apply border-border; }
   body { @apply bg-background text-foreground; }
   html { scroll-behavior: smooth; }
 }
 
-::-webkit-scrollbar { width: 7px; }
-::-webkit-scrollbar-track { background: #f0f3fa; }
-::-webkit-scrollbar-thumb { background: #2563eb; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #1d4ed8; }
-::selection { background: #f59e0b; color: #111; }
-*:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+/* ── Content fade-up (same easing as original homepage) ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity:0; }
+  to   { opacity:1; }
+}
+.animate-fade-up  { animation: fadeUp  0.55s cubic-bezier(0.22,1,0.36,1) both; }
+.animate-fade-in  { animation: fadeIn  0.55s cubic-bezier(0.22,1,0.36,1) both; }
+.delay-100 { animation-delay:0.10s; }
+.delay-200 { animation-delay:0.20s; }
+.delay-300 { animation-delay:0.30s; }
+.delay-400 { animation-delay:0.40s; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:#f0fdf4; }
+::-webkit-scrollbar-thumb { background:#166534; border-radius:4px; }
+::selection { background:#84cc16; color:#14532d; }
+
+/* Logo pill — softens JPG background on dark header */
+.logo-pill { background:rgba(255,255,255,0.10); border-radius:10px; padding:3px 8px; }
 
 /* WhatsApp float */
 .whatsapp-float {
-  position: fixed; bottom: 24px; right: 24px; z-index: 999;
-  width: 56px; height: 56px; background: #25D366; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-  transition: transform 0.2s, box-shadow 0.2s;
+  position:fixed; bottom:24px; right:24px; z-index:999;
+  width:56px; height:56px; background:#25D366; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 16px rgba(37,211,102,0.35);
+  transition:transform 0.2s,box-shadow 0.2s;
 }
-.whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.5); }
+.whatsapp-float:hover { transform:scale(1.1); box-shadow:0 6px 22px rgba(37,211,102,0.45); }
 
-/* Logo fix — removes white JPG background on dark navbars */
-.logo-on-dark {
-  border-radius: 10px;
-  box-shadow: 0 0 0 2px rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.08);
-  padding: 3px 8px;
+[data-debug-wrapper="true"] { display:contents !important; }
+[data-debug-wrapper="true"] > * {
+  margin:inherit; padding:inherit; gap:inherit; border:inherit;
 }
-.logo-on-light {
-  border-radius: 10px;
-  padding: 3px 8px;
-}
-
-[data-debug-wrapper="true"] { display: contents !important; }
 

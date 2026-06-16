@@ -12,23 +12,19 @@ import { Phone, CheckCircle, MessageCircle, Sparkles } from 'lucide-react';
 
 const QuotesPage = () => {
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const preselectedService = params.get('service') || '';
+  const preselected = new URLSearchParams(location.search).get('service') || '';
 
   const [formData, setFormData] = useState({
-    name: '', email: '', phone: '',
-    service: preselectedService,
-    message: ''
+    name:'', email:'', phone:'', service: preselected, message:''
   });
 
-  // If user navigates here from different service, update the selection
   useEffect(() => {
     const svc = new URLSearchParams(location.search).get('service') || '';
     setFormData(prev => ({ ...prev, service: svc }));
   }, [location.search]);
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-  const handleServiceChange = (value) => setFormData({ ...formData, service: value });
+  const handleServiceChange = (v) => setFormData({ ...formData, service: v });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,7 +34,7 @@ const QuotesPage = () => {
       *Email:* ${formData.email}%0A +
       *Phone:* ${formData.phone}%0A +
       *Service:* ${formData.service}%0A +
-      *Message:* ${formData.message}%0A%0A +
+      *Details:* ${formData.message}%0A%0A +
       _Sent from gurkhascleaningservice.com.au_`;
     window.open(`https://wa.me/61${companyInfo.phoneRaw}?text=${msg}`, '_blank');
   };
@@ -47,48 +43,45 @@ const QuotesPage = () => {
     <div className="min-h-screen">
       <Header />
       <main>
-
-        {/* Page Hero */}
-        <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#0f1a2e] via-[#1a2744] to-[#1e3060] relative overflow-hidden">
+        {/* Page hero */}
+        <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#14532d] via-[#166534] to-[#15803d] relative overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-[#2563eb]/15 blur-3xl" />
+            <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-[#84cc16]/15 blur-3xl" />
             <div className="absolute bottom-0 left-0 w-60 h-60 rounded-full bg-[#f59e0b]/10 blur-3xl" />
           </div>
           <div className="max-w-7xl mx-auto text-center relative z-10">
-            <span className="inline-block bg-[#2563eb]/20 text-blue-300 px-4 py-1.5 rounded-full text-sm font-bold mb-4 tracking-wide uppercase">
+            <span className="animate-fade-up inline-block bg-[#84cc16]/20 text-[#bef264] px-4 py-1.5 rounded-full text-sm font-bold mb-4 tracking-wide uppercase">
               Free Quote
             </span>
-            <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-white mb-5">
+            <h1 className="animate-fade-up delay-100 font-display text-4xl sm:text-5xl font-extrabold text-white leading-[1.15] pb-2 mb-5">
               Get Your Free Quote
             </h1>
-            <p className="text-white/65 text-lg max-w-2xl mx-auto">
+            <p className="animate-fade-up delay-200 text-white/65 text-lg max-w-2xl mx-auto">
               Fill out the form and we'll respond within the hour with a clear, honest quote — no hidden fees.
             </p>
-            {preselectedService && (
-              <div className="inline-flex items-center gap-2 mt-5 bg-[#f59e0b]/20 border border-[#f59e0b]/30 px-5 py-2.5 rounded-full">
-                <Sparkles className="text-[#f59e0b]" size={16} />
-                <span className="text-[#f59e0b] font-semibold text-sm">
-                  Enquiring about: {preselectedService}
-                </span>
+            {preselected && (
+              <div className="animate-fade-up delay-300 inline-flex items-center gap-2 mt-5 bg-[#84cc16]/20 border border-[#84cc16]/30 px-5 py-2.5 rounded-full">
+                <Sparkles className="text-[#84cc16]" size={16} />
+                <span className="text-[#bef264] font-semibold text-sm">Enquiring about: {preselected}</span>
               </div>
             )}
           </div>
         </section>
 
-        {/* Form Section */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#f9fafb]">
+        {/* Form */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#fef9f0]">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
 
-              {/* Form */}
+              {/* Form card */}
               <div className="lg:col-span-3">
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-10">
+                <div className="animate-fade-up bg-white rounded-2xl shadow-sm border border-[#dcfce7] p-6 sm:p-10">
                   <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
                         <Label htmlFor="name" className="text-gray-700 font-medium text-sm">Full Name *</Label>
                         <Input id="name" name="name" value={formData.name} onChange={handleChange} required
-                          className="mt-2 h-12 rounded-xl border-gray-200 focus:border-[#2563eb] focus:ring-[#2563eb]"
+                          className="mt-2 h-12 rounded-xl border-gray-200 focus:border-[#166534] focus:ring-[#166534]"
                           placeholder="John Smith" />
                       </div>
                       <div>
@@ -117,7 +110,7 @@ const QuotesPage = () => {
                         </SelectContent>
                       </Select>
                       {formData.service && (
-                        <p className="text-xs text-[#2563eb] mt-1.5 font-medium">✓ {formData.service} selected</p>
+                        <p className="text-xs text-[#166534] mt-1.5 font-medium">✓ {formData.service} selected</p>
                       )}
                     </div>
                     <div>
@@ -137,15 +130,15 @@ const QuotesPage = () => {
 
               {/* Sidebar */}
               <div className="lg:col-span-2 space-y-6">
-                <div className="bg-[#1a2744] rounded-2xl p-8 text-white">
+                <div className="animate-fade-up delay-100 bg-[#166534] rounded-2xl p-8 text-white">
                   <h3 className="font-display text-xl font-bold mb-2">Prefer to Call?</h3>
                   <p className="text-white/65 text-sm mb-5">Speak directly with our team for immediate assistance.</p>
                   <a href={`tel:${companyInfo.phoneRaw}`}
-                    className="inline-flex items-center gap-2 bg-[#f59e0b] text-gray-900 px-6 py-3 rounded-full font-bold text-sm hover:bg-[#d97706] transition-colors">
+                    className="inline-flex items-center gap-2 bg-[#84cc16] text-[#14532d] px-6 py-3 rounded-full font-extrabold text-sm hover:bg-[#65a30d] hover:text-white transition-colors">
                     <Phone size={17} /> {companyInfo.phone}
                   </a>
                 </div>
-                <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                <div className="animate-fade-up delay-200 bg-white rounded-2xl p-8 shadow-sm border border-[#dcfce7]">
                   <h3 className="font-display text-xl font-bold text-gray-900 mb-5">What to Expect</h3>
                   <ul className="space-y-4">
                     {[
@@ -155,14 +148,13 @@ const QuotesPage = () => {
                       'Flexible scheduling options',
                     ].map((item) => (
                       <li key={item} className="flex items-start gap-3">
-                        <CheckCircle className="text-[#2563eb] flex-shrink-0 mt-0.5" size={17} />
+                        <CheckCircle className="text-[#166534] flex-shrink-0 mt-0.5" size={17} />
                         <span className="text-gray-600 text-sm">{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
               </div>
-
             </div>
           </div>
         </section>
