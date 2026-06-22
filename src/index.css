@@ -4,7 +4,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
-body { margin:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+body { margin:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
 h1,h2,h3,h4,h5,h6 { font-family:'Plus Jakarta Sans',sans-serif; }
 
 @layer base {
@@ -15,19 +15,19 @@ h1,h2,h3,h4,h5,h6 { font-family:'Plus Jakarta Sans',sans-serif; }
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
-    --primary: 142 71% 45%;
+    --primary: 245 58% 51%;
     --primary-foreground: 0 0% 98%;
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
-    --accent: 84 81% 44%;
+    --accent: 25 95% 53%;
     --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
-    --ring: 142 71% 45%;
+    --ring: 245 58% 51%;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
@@ -40,7 +40,7 @@ h1,h2,h3,h4,h5,h6 { font-family:'Plus Jakarta Sans',sans-serif; }
   html { scroll-behavior: smooth; }
 }
 
-/* ── Content fade-up (same easing as original homepage) ── */
+/* Content fade-up — same feel as original homepage */
 @keyframes fadeUp {
   from { opacity:0; transform:translateY(22px); }
   to   { opacity:1; transform:translateY(0); }
@@ -49,8 +49,8 @@ h1,h2,h3,h4,h5,h6 { font-family:'Plus Jakarta Sans',sans-serif; }
   from { opacity:0; }
   to   { opacity:1; }
 }
-.animate-fade-up  { animation: fadeUp  0.55s cubic-bezier(0.22,1,0.36,1) both; }
-.animate-fade-in  { animation: fadeIn  0.55s cubic-bezier(0.22,1,0.36,1) both; }
+.animate-fade-up { animation: fadeUp  0.55s cubic-bezier(0.22,1,0.36,1) both; }
+.animate-fade-in { animation: fadeIn  0.55s cubic-bezier(0.22,1,0.36,1) both; }
 .delay-100 { animation-delay:0.10s; }
 .delay-200 { animation-delay:0.20s; }
 .delay-300 { animation-delay:0.30s; }
@@ -58,11 +58,11 @@ h1,h2,h3,h4,h5,h6 { font-family:'Plus Jakarta Sans',sans-serif; }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width:6px; }
-::-webkit-scrollbar-track { background:#f0fdf4; }
-::-webkit-scrollbar-thumb { background:#166534; border-radius:4px; }
-::selection { background:#84cc16; color:#14532d; }
+::-webkit-scrollbar-track { background:#eef2ff; }
+::-webkit-scrollbar-thumb { background:#1e1b4b; border-radius:4px; }
+::selection { background:#f97316; color:#fff; }
 
-/* Logo pill — softens JPG background on dark header */
+/* Logo pill — keeps JPG logo clean on dark navbar */
 .logo-pill { background:rgba(255,255,255,0.10); border-radius:10px; padding:3px 8px; }
 
 /* WhatsApp float */
@@ -71,12 +71,9 @@ h1,h2,h3,h4,h5,h6 { font-family:'Plus Jakarta Sans',sans-serif; }
   width:56px; height:56px; background:#25D366; border-radius:50%;
   display:flex; align-items:center; justify-content:center;
   box-shadow:0 4px 16px rgba(37,211,102,0.35);
-  transition:transform 0.2s,box-shadow 0.2s;
+  transition:transform 0.2s, box-shadow 0.2s;
 }
 .whatsapp-float:hover { transform:scale(1.1); box-shadow:0 6px 22px rgba(37,211,102,0.45); }
 
 [data-debug-wrapper="true"] { display:contents !important; }
-[data-debug-wrapper="true"] > * {
-  margin:inherit; padding:inherit; gap:inherit; border:inherit;
-}
 

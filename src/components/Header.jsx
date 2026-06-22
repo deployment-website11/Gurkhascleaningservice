@@ -17,9 +17,9 @@ const Header = () => {
   useEffect(() => { setMobileOpen(false); }, [location.pathname]);
 
   return (
-    /* fixed + z-50 = always on top while scrolling */
+    /* Always fixed + solid dark bg so it never looks sloppy over any image */
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-[#14532d] shadow-lg shadow-black/20 py-2' : 'bg-transparent py-4'
+      scrolled ? 'bg-[#12103a] shadow-lg shadow-black/30 py-2' : 'bg-[#1e1b4b]/90 backdrop-blur-md py-4'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
@@ -42,8 +42,8 @@ const Header = () => {
               <Link key={item.name} to={item.href}
                 className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
                   location.pathname === item.href
-                    ? 'bg-[#84cc16] text-[#14532d]'
-                    : 'text-white/85 hover:bg-white/15 hover:text-white'
+                    ? 'bg-[#f97316] text-white'
+                    : 'text-white/85 hover:bg-white/10 hover:text-white'
                 }`}>
                 {item.name}
               </Link>
@@ -52,7 +52,7 @@ const Header = () => {
 
           {/* Phone CTA */}
           <a href={`tel:${companyInfo.phoneRaw}`}
-            className="hidden lg:flex items-center gap-2 bg-[#84cc16] text-[#14532d] px-5 py-2.5 rounded-full font-bold text-sm hover:bg-[#65a30d] hover:text-white transition-colors shadow-md">
+            className="hidden lg:flex items-center gap-2 bg-[#f97316] text-white px-5 py-2.5 rounded-full font-bold text-sm hover:bg-[#ea6c0a] transition-colors shadow-md">
             <Phone size={15} /> {companyInfo.phone}
           </a>
 
@@ -67,19 +67,19 @@ const Header = () => {
         <div className={`lg:hidden overflow-hidden transition-all duration-300 ${
           mobileOpen ? 'max-h-[500px] opacity-100 mt-4' : 'max-h-0 opacity-0'
         }`}>
-          <div className="bg-[#14532d] border border-white/10 rounded-2xl p-4 space-y-1 shadow-2xl">
+          <div className="bg-[#12103a] border border-white/10 rounded-2xl p-4 space-y-1 shadow-2xl">
             {navigation.map((item) => (
               <Link key={item.name} to={item.href}
                 className={`block px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${
                   location.pathname === item.href
-                    ? 'bg-[#84cc16] text-[#14532d]'
+                    ? 'bg-[#f97316] text-white'
                     : 'text-white/80 hover:bg-white/10 hover:text-white'
                 }`}>
                 {item.name}
               </Link>
             ))}
             <a href={`tel:${companyInfo.phoneRaw}`}
-              className="flex items-center justify-center gap-2 bg-[#84cc16] text-[#14532d] px-4 py-3 rounded-xl font-bold mt-2 text-sm">
+              className="flex items-center justify-center gap-2 bg-[#f97316] text-white px-4 py-3 rounded-xl font-bold mt-2 text-sm hover:bg-[#ea6c0a] transition-colors">
               <Phone size={16} /> Call {companyInfo.phone}
             </a>
           </div>
